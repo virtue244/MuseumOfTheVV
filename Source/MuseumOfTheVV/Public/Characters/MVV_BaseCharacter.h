@@ -1,4 +1,5 @@
 // Copyright Virtuous Vagrant
+// All current plan is for this class to be inhereted from the Player and Enemy Characters
 
 #pragma once
 

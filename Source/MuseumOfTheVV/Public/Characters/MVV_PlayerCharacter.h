@@ -1,4 +1,5 @@
 // Copyright Virtuous Vagrant
+// This will be designed to be a Playable Character
 
 #pragma once
 
