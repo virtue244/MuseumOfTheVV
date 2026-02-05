@@ -1,4 +1,4 @@
-// Copyright Vertiu
+// Copyright Virtuous Vagrant
 
 #pragma once
 

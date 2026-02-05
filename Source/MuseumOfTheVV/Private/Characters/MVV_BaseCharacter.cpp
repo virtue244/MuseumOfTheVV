@@ -1,4 +1,4 @@
-// Copyright Vertiu
+// Copyright Virtuous Vagrant
 
 
 #include "MuseumOfTheVV/Public/Characters/MVV_BaseCharacter.h"
