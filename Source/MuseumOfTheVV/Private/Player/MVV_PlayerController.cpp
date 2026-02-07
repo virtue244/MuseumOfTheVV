@@ -39,6 +39,7 @@ void AMVV_PlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(JumpAction,ETriggerEvent::Completed, this, &ThisClass::StopJumping);
 	EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered, this, &ThisClass::Move);
 	EnhancedInputComponent->BindAction(LookAction,ETriggerEvent::Triggered, this, &ThisClass::Look);
+	EnhancedInputComponent->BindAction(PrimaryAction,ETriggerEvent::Started, this, &ThisClass::ExecutePrimaryAction);
 }
 
 void AMVV_PlayerController::Jump()
@@ -124,8 +125,13 @@ void AMVV_PlayerController::Look(const FInputActionValue& Value)
 	// I am confused by this, thought the axis wouldn't match up, but seems to for some reason (O_o)
 	//																						   >-\--<
 	//																							 ^
-	//																							/ \
+	//																							/ |
 	AddPitchInput(LookAxisVector.Y);
 	
 	
+}
+
+void AMVV_PlayerController::ExecutePrimaryAction()
+{
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Primary Action"));
 }

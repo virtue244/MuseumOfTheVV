@@ -25,18 +25,22 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input")
 	TArray<TObjectPtr<UInputMappingContext>> InputMappingContexts;
 
-	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input")
+	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input|Movement")
 	TObjectPtr<UInputAction> JumpAction;
 
-	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input")
+	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input|Movement")
 	TObjectPtr<UInputAction> MoveAction;
 
-	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input")
+	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input|Movement")
 	TObjectPtr<UInputAction> LookAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input|Abilities")
+	TObjectPtr<UInputAction> PrimaryAction;
 
 	// Functions within this PlayerController that are called when a particular action is needed (Started, Completed or Triggered)
 	void Jump();
 	void StopJumping();
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
+	void ExecutePrimaryAction();
 };
