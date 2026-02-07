@@ -9,6 +9,8 @@
 #include "InputMappingContext.h"
 #include "GameFramework/Character.h"
 
+#include "DrawDebugHelpers.h"
+
 void AMVV_PlayerController::SetupInputComponent()
 {
 	Super::SetupInputComponent();
@@ -53,26 +55,76 @@ void AMVV_PlayerController::StopJumping()
 
 void AMVV_PlayerController::Move(const FInputActionValue& Value)
 {
-
-	// TODO - I need to spend more time here to understand the axis flip-flopping 
 	if (!IsValid(GetPawn())) return;
+
+	// Extract the data from the input system (INPUT SPACE)
+	// X represents Left(A)/Right(D)
+	// Y represents Forward(W)/Backwards(S)
 	const FVector2D MovementVector = Value.Get<FVector2D>();
 
-	// Find which way is forward
+	/*
+	* YawRotation gets the rotation of the controller (where the player is looking) but zeros out the Pitch and Roll.
+	* This prevents the character from trying to walk into the ground or fly into the air if the player looks up or down.
+	 */
 	const FRotator YawRotation(0.f, GetControlRotation().Yaw, 0.f);
-	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
-	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+
+	/* These lines turn that rotation into actual direction arrows (vectors).
+	* In Unreal Engine (WORLD SPACE)
+	*	X is Forward
+	*	-X if Backwards
+	*	Y is Right
+	*	-Y is Left
+	*
+	*	1. The World Space (The "Where")
+	*	In Unreal Engine’s 3D world coordinate system:
+	*		X-Axis is the "Forward" axis (Red arrow in the editor).
+	*		Y-Axis is the "Right" axis (Green arrow in the editor).
+	*	When the code calls GetUnitAxis(EAxis::X), it is asking: "In the direction the player is looking, which way is 'World Forward'?"
+	*
+	*	2. The Input Space (The "Value")
+	*	When you use a joystick or WASD, the input is usually represented as a 2D coordinate (x,y):
+	*		Input X: Horizontal axis (Left/Right).
+	*		Input Y: Vertical axis (Forward/Backward).
+	 */
+	const FVector WorldForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector WorldRightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
 
 	// Apply Vectors
-	GetPawn()->AddMovementInput(ForwardDirection, MovementVector.Y);
-	GetPawn()->AddMovementInput(RightDirection, MovementVector.X);
+	// Move the pawn along the World's Forward line using the Input's Vertical value.
+	GetPawn()->AddMovementInput(WorldForwardDirection, MovementVector.Y);
+	// Move the pawn along the World's Right line using the Input's Horizontal value.
+	GetPawn()->AddMovementInput(WorldRightDirection, MovementVector.X);
+
+	/* Debugging Start *\/
+	// Get the current location of the character to start the line
+	FVector StartLocation = GetPawn()->GetActorLocation();
 	
+	// --- Draw Forward Vector (Red) ---
+	if (MovementVector.Y != 0.f)
+	{
+		FVector VectorMultiplier = (WorldForwardDirection * 500.f);
+		DrawDebugLine(GetWorld(), StartLocation - VectorMultiplier, StartLocation + VectorMultiplier, FColor::Red, false, -1, 0, 5);
+	}
+	// --- Draw Right Vector (Green) ---
+	if (MovementVector.X != 0.f)
+	{
+		FVector VectorMultiplier = (WorldRightDirection * 500.f);
+		DrawDebugLine(GetWorld(), StartLocation - VectorMultiplier, StartLocation + VectorMultiplier, FColor::Green, false, -1, 0, 5);
+	}
+	/\* Debugging End */
 }
 
 void AMVV_PlayerController::Look(const FInputActionValue& Value)
 {
 	const FVector2D LookAxisVector = Value.Get<FVector2D>();
+	// Yaw is rotation around the Z axis in engine (Left/Right), X relative to the INPUT SYSTEM (Left/Right)
 	AddYawInput(LookAxisVector.X);
+	// Pitch is rotation around the Y axis in engine (Up/Down), Y relative to the INPUT SYSTEM (Up/Down)
+	//																							x~x
+	// I am confused by this, thought the axis wouldn't match up, but seems to for some reason (O_o)
+	//																						   >-\--<
+	//																							 ^
+	//																							/ \
 	AddPitchInput(LookAxisVector.Y);
 	
 	
