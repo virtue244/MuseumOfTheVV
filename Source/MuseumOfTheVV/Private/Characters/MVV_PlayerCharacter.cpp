@@ -3,10 +3,12 @@
 
 #include "MuseumOfTheVV/Public/Characters/MVV_PlayerCharacter.h"
 
+#include "AbilitySystemComponent.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Player/MVV_PlayerState.h"
 
 
 AMVV_PlayerCharacter::AMVV_PlayerCharacter()
@@ -47,6 +49,23 @@ AMVV_PlayerCharacter::AMVV_PlayerCharacter()
 	FollowCamera->SetupAttachment(CameraBoom, USpringArmComponent::SocketName);
 	// Set Properties of the Object
 	FollowCamera->bUsePawnControlRotation = false;
+}
+
+UAbilitySystemComponent* AMVV_PlayerCharacter::GetAbilitySystemComponent() const
+{
+	AMVV_PlayerState* PlayerState = Cast<AMVV_PlayerState>(GetPlayerState());
+	if (!IsValid(PlayerState)) return nullptr;
+	
+	return PlayerState->GetAbilitySystemComponent();
+}
+
+void AMVV_PlayerCharacter::PossessedBy(AController* NewController)
+{
+	Super::PossessedBy(NewController);
+
+	if (!IsValid(GetAbilitySystemComponent())) return;
+	
+	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
 }
 
 

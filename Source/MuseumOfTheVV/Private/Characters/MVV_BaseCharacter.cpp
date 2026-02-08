@@ -13,5 +13,10 @@ AMVV_BaseCharacter::AMVV_BaseCharacter()
 	GetMesh()->VisibilityBasedAnimTickOption = EVisibilityBasedAnimTickOption::AlwaysTickPoseAndRefreshBones;
 }
 
+UAbilitySystemComponent* AMVV_BaseCharacter::GetAbilitySystemComponent() const
+{
+	return nullptr;
+}
+
 
 
