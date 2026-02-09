@@ -21,7 +21,34 @@ public:
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 private:
-	
+
+	/* Gameplay Ability System
+	 * -----------------------
+	* The Ability System Component (The Brain)
+	*	Keeps track of everything the character can do.
+	*	Remembers if the character is currently "stunned", "poisoned", pr "super strong".
+	*	In Multiplayer games, it makes sure everyone's screen sees the same thing at the same time.
+	*
+	* Gameplay Abilities (The Actions)
+	*	- Play Animation
+	*	- Line Trace
+	*	- Get Hit Actor
+	*	
+	* Gameplay Effects (Rules of Change)
+	*	- Calculate Damage Done by Ability
+	*	
+	* Gameplay Attributes (Stats)
+	*	- Alter Health Attribute
+	*	
+	* Gameplay Cues (Special Effects / FX)
+	*	- Making an actor turn red on hit
+	*
+	* Gameplay Tags (The Labels)
+	*	- If you have the tag State.Frozen you cant perform the Ability.Run to move
+	*
+	* Gameplay Tasks
+	*	- // TODO
+	*/
 	UPROPERTY(VisibleAnywhere, Category="MVV|Abilities")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
 };
