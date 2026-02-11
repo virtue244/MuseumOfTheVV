@@ -19,7 +19,9 @@ public:
 	// Sets default values for this character's properties
 	AMVV_PlayerCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	
 	virtual void PossessedBy(AController* NewController) override;
+	virtual void OnRep_PlayerState() override;
 
 private:
 

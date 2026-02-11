@@ -53,15 +53,28 @@ AMVV_PlayerCharacter::AMVV_PlayerCharacter()
 
 UAbilitySystemComponent* AMVV_PlayerCharacter::GetAbilitySystemComponent() const
 {
-	AMVV_PlayerState* PlayerState = Cast<AMVV_PlayerState>(GetPlayerState());
-	if (!IsValid(PlayerState)) return nullptr;
+	AMVV_PlayerState* MVVPlayerState = Cast<AMVV_PlayerState>(GetPlayerState());
+	if (!IsValid(MVVPlayerState))
+	{
+		return nullptr;
+	}
+	return MVVPlayerState->GetAbilitySystemComponent();
 	
-	return PlayerState->GetAbilitySystemComponent();
 }
 
 void AMVV_PlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
+
+	if (!IsValid(GetAbilitySystemComponent())) return;
+	// TODO Why do we need this in both the OnRep_PlayerState method and the ProcessedBy method?
+	// What does the InitAbilityActorInfo method do?
+	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
+}
+
+void AMVV_PlayerCharacter::OnRep_PlayerState()
+{
+	Super::OnRep_PlayerState();
 
 	if (!IsValid(GetAbilitySystemComponent())) return;
 	

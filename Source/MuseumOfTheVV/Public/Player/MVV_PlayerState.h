@@ -17,7 +17,8 @@ class MUSEUMOFTHEVV_API AMVV_PlayerState : public APlayerState, public IAbilityS
 	GENERATED_BODY()
 public:
 	AMVV_PlayerState();
-	// TODO Do we need to inheret IAbililitySystemInterface in this class? Seems like I am using it in the Base Character class.
+	// This is the class that holds the gameplay ability system component, and the player character will reference the player state to retrieve this variable
+	// TODO This will likely be different for an Enemy Character as we will probably have the AbilitySystem Component on the character itself, I think.
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
 
 private:
@@ -47,7 +48,7 @@ private:
 	*	- If you have the tag State.Frozen you cant perform the Ability.Run to move
 	*
 	* Gameplay Tasks
-	*	- // TODO
+	*	- // TODO What are tasks
 	*/
 	UPROPERTY(VisibleAnywhere, Category="MVV|Abilities")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
