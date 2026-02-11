@@ -60,18 +60,28 @@ UAbilitySystemComponent* AMVV_PlayerCharacter::GetAbilitySystemComponent() const
 	}
 	return MVVPlayerState->GetAbilitySystemComponent();
 	
+	
 }
 
+// Override from ACharacter/APawn -> Called when this Pawn is possessed. Only called on the server (or in standalone).
+/*
+* This function only runs on the Server.
+* When a PlayerController possesses a Pawn, the Server immediately knows which PlayerState and Pawn are linked.
+* Initializing here allows the Server to begin processing abilities, attributes, and effects for that player.
+ */
 void AMVV_PlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-
 	if (!IsValid(GetAbilitySystemComponent())) return;
-	// TODO Why do we need this in both the OnRep_PlayerState method and the ProcessedBy method?
-	// What does the InitAbilityActorInfo method do?
+	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
 }
 
+// Override from APawn -> PlayerState Replication Notification Callback meaning that it triggers automatically on clients whenever the server updates or assigns a PlayerState to that specific Pawn.
+/* On the Client, there is no guarantee that the PlayerState will be valid when the Pawn first spawns (e.g., in BeginPlay).
+* OnRep_PlayerState is the "callback" that triggers the moment the Client receives the PlayerState data from the Server.
+* Without this call, the Client-side ASC won't know its Avatar, leading to issues with local prediction and UI updates.
+*/
 void AMVV_PlayerCharacter::OnRep_PlayerState()
 {
 	Super::OnRep_PlayerState();
