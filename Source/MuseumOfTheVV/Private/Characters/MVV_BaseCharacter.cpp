@@ -3,6 +3,8 @@
 
 #include "MuseumOfTheVV/Public/Characters/MVV_BaseCharacter.h"
 
+#include "AbilitySystemComponent.h"
+
 
 // Sets default values
 AMVV_BaseCharacter::AMVV_BaseCharacter()
@@ -16,6 +18,17 @@ AMVV_BaseCharacter::AMVV_BaseCharacter()
 UAbilitySystemComponent* AMVV_BaseCharacter::GetAbilitySystemComponent() const
 {
 	return nullptr;
+}
+
+void AMVV_BaseCharacter::GiveStartupAbilities()
+{
+	if (!IsValid(GetAbilitySystemComponent())) return;
+	
+	for (const auto& Ability : StartupAbilities)
+	{
+		FGameplayAbilitySpec AbilitySpec = FGameplayAbilitySpec(Ability);
+		GetAbilitySystemComponent()->GiveAbility(AbilitySpec);
+	}
 }
 
 

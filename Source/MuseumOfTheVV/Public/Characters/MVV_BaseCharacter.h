@@ -8,6 +8,9 @@
 #include "GameFramework/Character.h"
 #include "MVV_BaseCharacter.generated.h"
 
+
+class UGameplayAbility;
+
 UCLASS(Abstract)
 class MUSEUMOFTHEVV_API AMVV_BaseCharacter : public ACharacter, public IAbilitySystemInterface
 {
@@ -16,5 +19,12 @@ class MUSEUMOFTHEVV_API AMVV_BaseCharacter : public ACharacter, public IAbilityS
 public:
 	AMVV_BaseCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+
+protected:
+	void GiveStartupAbilities();
+	
+private:
+	UPROPERTY(EditDefaultsOnly, Category = "MVV|Abilities")
+	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 
 };

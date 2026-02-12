@@ -72,9 +72,11 @@ UAbilitySystemComponent* AMVV_PlayerCharacter::GetAbilitySystemComponent() const
 void AMVV_PlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	if (!IsValid(GetAbilitySystemComponent())) return;
+	// TODO What does HasAuthority do and why did we put it here?
+	if (!IsValid(GetAbilitySystemComponent()) || !HasAuthority()) return;
 	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
+	GiveStartupAbilities();
 }
 
 // Override from APawn -> PlayerState Replication Notification Callback meaning that it triggers automatically on clients whenever the server updates or assigns a PlayerState to that specific Pawn.
