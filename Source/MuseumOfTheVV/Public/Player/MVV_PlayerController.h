@@ -7,6 +7,7 @@
 #include "MVV_PlayerController.generated.h"
 
 
+struct FGameplayTag;
 class UInputAction;
 class UInputMappingContext;
 struct FInputActionValue;
@@ -37,10 +38,19 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input|Abilities")
 	TObjectPtr<UInputAction> PrimaryAction;
 
+	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input|Abilities")
+	TObjectPtr<UInputAction> SecondaryAction;
+
+	UPROPERTY(EditDefaultsOnly, Category = "MVV|Input|Abilities")
+	TObjectPtr<UInputAction> TertiaryAction;
+
 	// Functions within this PlayerController that are called when a particular action is needed (Started, Completed or Triggered)
 	void Jump();
 	void StopJumping();
 	void Move(const FInputActionValue& Value);
 	void Look(const FInputActionValue& Value);
 	void ExecutePrimaryAction();
+	void ExecuteSecondaryAction();
+	void ExecuteTertiaryAction();
+	void ActivateAbility(const FGameplayTag& AbilityTag) const;
 };

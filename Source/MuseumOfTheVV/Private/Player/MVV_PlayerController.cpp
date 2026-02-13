@@ -3,11 +3,12 @@
 
 #include "Player/MVV_PlayerController.h"
 
-#include "EnhancedInputComponent.h"
+#include "AbilitySystemBlueprintLibrary.h"
+#include "AbilitySystemComponent.h"
 #include "EnhancedInputSubsystems.h"
-#include "HeadMountedDisplayTypes.h"
-#include "InputMappingContext.h"
+#include "EnhancedInputComponent.h"
 #include "GameFramework/Character.h"
+#include "GameplayTags/MVVTags.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -40,6 +41,8 @@ void AMVV_PlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered, this, &ThisClass::Move);
 	EnhancedInputComponent->BindAction(LookAction,ETriggerEvent::Triggered, this, &ThisClass::Look);
 	EnhancedInputComponent->BindAction(PrimaryAction,ETriggerEvent::Started, this, &ThisClass::ExecutePrimaryAction);
+	EnhancedInputComponent->BindAction(SecondaryAction,ETriggerEvent::Started, this, &ThisClass::ExecuteSecondaryAction);
+	EnhancedInputComponent->BindAction(TertiaryAction,ETriggerEvent::Started, this, &ThisClass::ExecuteTertiaryAction);
 }
 
 void AMVV_PlayerController::Jump()
@@ -133,5 +136,27 @@ void AMVV_PlayerController::Look(const FInputActionValue& Value)
 
 void AMVV_PlayerController::ExecutePrimaryAction()
 {
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Primary Action"));
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Primary Action"));
+	ActivateAbility(MVVTags::MVVAbilities::Primary);
+}
+
+void AMVV_PlayerController::ExecuteSecondaryAction()
+{
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Secondary Action"));
+	ActivateAbility(MVVTags::MVVAbilities::Secondary);
+}
+
+void AMVV_PlayerController::ExecuteTertiaryAction()
+{
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, TEXT("Tertiary Action"));
+	ActivateAbility(MVVTags::MVVAbilities::Tertiary);
+}
+
+void AMVV_PlayerController::ActivateAbility(const FGameplayTag& AbilityTag) const
+{
+	UAbilitySystemComponent* ASC = UAbilitySystemBlueprintLibrary::GetAbilitySystemComponent(GetPawn());
+	if (!IsValid(ASC)) return;
+
+	ASC->TryActivateAbilitiesByTag(AbilityTag.GetSingleTagContainer());
+	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, AbilityTag.ToString()+" -> Activated via C++");
 }
