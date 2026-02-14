@@ -72,7 +72,8 @@ UAbilitySystemComponent* AMVV_PlayerCharacter::GetAbilitySystemComponent() const
 void AMVV_PlayerCharacter::PossessedBy(AController* NewController)
 {
 	Super::PossessedBy(NewController);
-	// TODO What does HasAuthority do and why did we put it here?
+	// HasAuthority function Ensures that this code only runs on the authoritative instance (typically the server)
+
 	if (!IsValid(GetAbilitySystemComponent()) || !HasAuthority()) return;
 	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);

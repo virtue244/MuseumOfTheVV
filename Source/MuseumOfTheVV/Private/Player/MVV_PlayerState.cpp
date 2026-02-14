@@ -8,7 +8,6 @@
 AMVV_PlayerState::AMVV_PlayerState()
 {
 	// Set the frequency at which this object will be considered for replication.
-	// TODO Let's explore replication
 	SetNetUpdateFrequency(100.f);
 
 	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
