@@ -40,7 +40,7 @@ void AMVV_PlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(JumpAction,ETriggerEvent::Completed, this, &ThisClass::StopJumping);
 	EnhancedInputComponent->BindAction(MoveAction,ETriggerEvent::Triggered, this, &ThisClass::Move);
 	EnhancedInputComponent->BindAction(LookAction,ETriggerEvent::Triggered, this, &ThisClass::Look);
-	EnhancedInputComponent->BindAction(PrimaryAction,ETriggerEvent::Started, this, &ThisClass::ExecutePrimaryAction);
+	EnhancedInputComponent->BindAction(PrimaryAction,ETriggerEvent::Triggered, this, &ThisClass::ExecutePrimaryAction);
 	EnhancedInputComponent->BindAction(SecondaryAction,ETriggerEvent::Started, this, &ThisClass::ExecuteSecondaryAction);
 	EnhancedInputComponent->BindAction(TertiaryAction,ETriggerEvent::Started, this, &ThisClass::ExecuteTertiaryAction);
 }
@@ -158,5 +158,5 @@ void AMVV_PlayerController::ActivateAbility(const FGameplayTag& AbilityTag) cons
 	if (!IsValid(ASC)) return;
 
 	ASC->TryActivateAbilitiesByTag(AbilityTag.GetSingleTagContainer());
-	GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, AbilityTag.ToString()+" -> Activated via C++");
+	//GEngine->AddOnScreenDebugMessage(-1, 5.f, FColor::Red, AbilityTag.ToString()+" -> Activated via C++");
 }
