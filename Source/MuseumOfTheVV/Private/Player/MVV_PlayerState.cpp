@@ -3,14 +3,14 @@
 
 #include "Player/MVV_PlayerState.h"
 
-#include "AbilitySystemComponent.h"
+#include "AbilitySystem/MVV_AbilitySystemComponent.h"
 
 AMVV_PlayerState::AMVV_PlayerState()
 {
 	// Set the frequency at which this object will be considered for replication.
 	SetNetUpdateFrequency(100.f);
 
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent = CreateDefaultSubobject<UMVV_AbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 
 	/* The AbilitySystemComponent (ASC) uses "Replication Modes" to control how much data about Gameplay Effects is sent to other players.

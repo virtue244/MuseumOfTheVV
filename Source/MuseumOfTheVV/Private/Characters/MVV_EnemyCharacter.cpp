@@ -3,7 +3,7 @@
 
 #include "Characters/MVV_EnemyCharacter.h"
 
-#include "AbilitySystemComponent.h"
+#include "AbilitySystem/MVV_AbilitySystemComponent.h"
 
 
 // Sets default values
@@ -11,7 +11,7 @@ AMVV_EnemyCharacter::AMVV_EnemyCharacter()
 {
 	PrimaryActorTick.bCanEverTick = false;
 
-	AbilitySystemComponent = CreateDefaultSubobject<UAbilitySystemComponent>("AbilitySystemComponent");
+	AbilitySystemComponent = CreateDefaultSubobject<UMVV_AbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 }
