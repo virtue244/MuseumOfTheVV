@@ -3,31 +3,36 @@
 
 #include "AbilitySystem/MVV_AbilitySystemComponent.h"
 
+#include "GameplayTags/MVVTags.h"
 
-// Sets default values for this component's properties
-UMVV_AbilitySystemComponent::UMVV_AbilitySystemComponent()
+
+void UMVV_AbilitySystemComponent::OnGiveAbility(FGameplayAbilitySpec& AbilitySpec)
 {
-	
-	PrimaryComponentTick.bCanEverTick = true;
+	Super::OnGiveAbility(AbilitySpec);
 
+	HandleAutoActivateAbilities(AbilitySpec);
 }
 
-
-// Called when the game starts
-void UMVV_AbilitySystemComponent::BeginPlay()
+void UMVV_AbilitySystemComponent::OnRep_ActivateAbilities()
 {
-	Super::BeginPlay();
-
-	
+	Super::OnRep_ActivateAbilities();
+	FScopedAbilityListLock ActivateScopeLock(*this);
+	for (FGameplayAbilitySpec& AbilitySpec : GetActivatableAbilities())
+	{
+		HandleAutoActivateAbilities(AbilitySpec);
+	}
 }
 
-
-// Called every frame
-void UMVV_AbilitySystemComponent::TickComponent(float DeltaTime, ELevelTick TickType,
-                                                FActorComponentTickFunction* ThisTickFunction)
+void UMVV_AbilitySystemComponent::HandleAutoActivateAbilities(const FGameplayAbilitySpec& AbilitySpec)
 {
-	Super::TickComponent(DeltaTime, TickType, ThisTickFunction);
-
-	
+	if (!IsValid(AbilitySpec.Ability)) return;
+	// CDO == Class Default Object
+	for (const FGameplayTag& Tag : AbilitySpec.Ability->GetAssetTags())
+	{
+		if (Tag.MatchesTagExact(MVVTags::MVVAbilities::ActivateOnGiven))
+		{
+			TryActivateAbility(AbilitySpec.Handle);
+			return;
+		}
+	}
 }
-

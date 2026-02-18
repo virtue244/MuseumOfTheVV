@@ -13,15 +13,14 @@ class MUSEUMOFTHEVV_API UMVV_AbilitySystemComponent : public UAbilitySystemCompo
 	GENERATED_BODY()
 
 public:
-	
-	UMVV_AbilitySystemComponent();
-	virtual void TickComponent(float DeltaTime, ELevelTick TickType,
-						   FActorComponentTickFunction* ThisTickFunction) override;
-	
+	virtual void OnGiveAbility(FGameplayAbilitySpec& AbilitySpec) override;
+	virtual void OnRep_ActivateAbilities() override;
 
-protected:
+private:
+
+	void HandleAutoActivateAbilities(const FGameplayAbilitySpec& AbilitySpec);
 	
-	virtual void BeginPlay() override;
+	
 
 
 };
