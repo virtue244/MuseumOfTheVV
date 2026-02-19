@@ -13,6 +13,7 @@ AMVV_EnemyCharacter::AMVV_EnemyCharacter()
 
 	AbilitySystemComponent = CreateDefaultSubobject<UMVV_AbilitySystemComponent>("AbilitySystemComponent");
 	AbilitySystemComponent->SetIsReplicated(true);
+	// TODO - Why are we using minimal here?
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
 }
 
@@ -29,7 +30,8 @@ void AMVV_EnemyCharacter::BeginPlay()
 	if (!IsValid(AbilitySystemComponent)) return;
 	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(this, this);
-	
+
+	// TODO - I believe this means that we will only call GiveStartupAbilities() if this is executing on the server.
 	if (!HasAuthority()) return;
 
 	GiveStartupAbilities();

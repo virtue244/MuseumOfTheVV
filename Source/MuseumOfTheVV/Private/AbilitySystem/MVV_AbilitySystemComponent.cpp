@@ -5,7 +5,7 @@
 
 #include "GameplayTags/MVVTags.h"
 
-
+// TODO - Is this specifically used for the server?
 void UMVV_AbilitySystemComponent::OnGiveAbility(FGameplayAbilitySpec& AbilitySpec)
 {
 	Super::OnGiveAbility(AbilitySpec);
@@ -13,6 +13,7 @@ void UMVV_AbilitySystemComponent::OnGiveAbility(FGameplayAbilitySpec& AbilitySpe
 	HandleAutoActivateAbilities(AbilitySpec);
 }
 
+// TODO - Is this specifically used for the client?
 void UMVV_AbilitySystemComponent::OnRep_ActivateAbilities()
 {
 	Super::OnRep_ActivateAbilities();
