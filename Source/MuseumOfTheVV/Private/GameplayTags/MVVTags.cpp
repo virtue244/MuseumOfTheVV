@@ -11,4 +11,12 @@ namespace MVVTags
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Secondary, "MVVTags.MVVAbilities.Secondary", "Tag for the Secondary Ability")
 		UE_DEFINE_GAMEPLAY_TAG_COMMENT(Tertiary, "MVVTags.MVVAbilities.Tertiary", "Tag for the Tertiary Ability")
 	}
+	
+	namespace Events
+	{
+		namespace Enemy
+		{
+			UE_DEFINE_GAMEPLAY_TAG_COMMENT(HitReact, "MVVTags.Events.Enemy.HitReact", "Tag for the enemy HitReact Event.")
+		}
+	}
 }
