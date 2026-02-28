@@ -15,9 +15,14 @@ class MUSEUMOFTHEVV_API UMVV_Primary : public UMVV_GameplayAbility
 	GENERATED_BODY()
 public:
 	UFUNCTION(BlueprintCallable, Category="MVV|Abilities")
-	void HitBoxOverlapTest();
+	TArray<AActor*> HitBoxOverlapTest();
+
+	UFUNCTION(BlueprintCallable, Category="MVV|Abilities")
+	void SendHitReactEventToActors(const TArray<AActor*>& Actors);
 
 private:
+	void DrawHitBoxOverlapDebugs(const TArray<FOverlapResult>& OverlapResults, const FVector& HitBoxLocation) const;
+	
 	UPROPERTY(EditDefaultsOnly, Category = "MVV|Abilities")
 	float HitBoxRadius = 100.f;
 
