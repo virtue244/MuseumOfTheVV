@@ -13,4 +13,13 @@ UCLASS()
 class MUSEUMOFTHEVV_API UMVV_HitReact : public UMVV_GameplayAbility
 {
 	GENERATED_BODY()
+public:
+	UFUNCTION(BlueprintCallable, Category="MVV|Abilities")
+	void CacheHitDirectionVectors(AActor* Instigator);
+
+	UPROPERTY(BlueprintReadOnly, Category="MVV|Abilities")
+	FVector AvatarForward;
+	
+	UPROPERTY(BlueprintReadOnly, Category="MVV|Abilities")
+	FVector ToInsigator;
 };
