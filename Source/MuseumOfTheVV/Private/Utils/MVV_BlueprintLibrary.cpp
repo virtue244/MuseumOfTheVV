@@ -5,6 +5,8 @@
 
 EHitDirection UMVV_BlueprintLibrary::GetHitDirection(const FVector& TargetForward, const FVector& ToInstigator)
 {
+	// ||A|| ||B|| Cos(theta)
+	// Cos(theta) = adj/hyp
 	const float Dot = FVector::DotProduct(TargetForward, ToInstigator);
 	if (Dot < -0.5f)
 	{
@@ -13,6 +15,9 @@ EHitDirection UMVV_BlueprintLibrary::GetHitDirection(const FVector& TargetForwar
 	if (Dot < 0.5f)
 	{
 		//Either Left or Right
+		// ||A|| ||B|| Sin(theta)
+		// Sin(theta) = opp/hyp
+		// Perpendicular = Right <-> Left
 		const FVector Cross = FVector::CrossProduct(TargetForward, ToInstigator);
 		if (Cross.Z < 0.f)
 		{
