@@ -30,5 +30,14 @@ void AMVV_BaseCharacter::GiveStartupAbilities()
 	}
 }
 
+void AMVV_BaseCharacter::InitializeAttributes()
+{
+	checkf(IsValid(InitializeAttributesEffect), TEXT("InitializeAttributeEffect not set."));
+	
+	FGameplayEffectContextHandle ContextHandle = GetAbilitySystemComponent()->MakeEffectContext();
+	FGameplayEffectSpecHandle SpecHandle = GetAbilitySystemComponent()->MakeOutgoingSpec(InitializeAttributesEffect, 1.f, ContextHandle);
+	GetAbilitySystemComponent()->ApplyGameplayEffectSpecToSelf(*SpecHandle.Data.Get());
+}
+
 
 

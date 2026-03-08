@@ -9,6 +9,7 @@
 #include "MVV_BaseCharacter.generated.h"
 
 
+class UGameplayEffect;
 class UGameplayAbility;
 
 UCLASS(Abstract)
@@ -22,9 +23,12 @@ public:
 
 protected:
 	void GiveStartupAbilities();
+	void InitializeAttributes();
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "MVV|Abilities")
 	TArray<TSubclassOf<UGameplayAbility>> StartupAbilities;
 
+	UPROPERTY(EditDefaultsOnly, Category = "MVV|Effects")
+	TSubclassOf<UGameplayEffect> InitializeAttributesEffect;
 };

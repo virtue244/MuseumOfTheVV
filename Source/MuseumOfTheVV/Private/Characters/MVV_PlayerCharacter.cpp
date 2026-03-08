@@ -78,6 +78,7 @@ void AMVV_PlayerCharacter::PossessedBy(AController* NewController)
 	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
 	GiveStartupAbilities();
+	InitializeAttributes();
 }
 
 // Override from APawn -> PlayerState Replication Notification Callback meaning that it triggers automatically on clients whenever the server updates or assigns a PlayerState to that specific Pawn.
