@@ -4,6 +4,7 @@
 #include "Characters/MVV_EnemyCharacter.h"
 
 #include "AbilitySystem/MVV_AbilitySystemComponent.h"
+#include "AbilitySystem/MVV_AttributeSet.h"
 
 
 // Sets default values
@@ -15,6 +16,8 @@ AMVV_EnemyCharacter::AMVV_EnemyCharacter()
 	AbilitySystemComponent->SetIsReplicated(true);
 	// TODO - Why are we using minimal here?
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Minimal);
+
+	AttributeSet = CreateDefaultSubobject<UMVV_AttributeSet>("AttributeSet");
 }
 
 UAbilitySystemComponent* AMVV_EnemyCharacter::GetAbilitySystemComponent() const

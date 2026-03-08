@@ -7,6 +7,7 @@
 #include "GameFramework/PlayerState.h"
 #include "MVV_PlayerState.generated.h"
 
+class UAttributeSet;
 class UAbilitySystemComponent;
 /**
  * 
@@ -56,4 +57,7 @@ private:
 	*/
 	UPROPERTY(VisibleAnywhere, Category="MVV|Abilities")
 	TObjectPtr<UAbilitySystemComponent> AbilitySystemComponent;
+
+	UPROPERTY()
+	TObjectPtr<UAttributeSet> AttributeSet;
 };

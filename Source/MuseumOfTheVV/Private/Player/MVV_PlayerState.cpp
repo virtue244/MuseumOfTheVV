@@ -4,6 +4,7 @@
 #include "Player/MVV_PlayerState.h"
 
 #include "AbilitySystem/MVV_AbilitySystemComponent.h"
+#include "AbilitySystem/MVV_AttributeSet.h"
 
 AMVV_PlayerState::AMVV_PlayerState()
 {
@@ -19,6 +20,8 @@ AMVV_PlayerState::AMVV_PlayerState()
 	*	Minimal: No GameplayEffect details are replicated to anyone; only Tags and Cues are sent. This is highly efficient and recommended for AI/NPCs where other players don't need to see specific buff durations.
 	 */
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
+
+	AttributeSet = CreateDefaultSubobject<UMVV_AttributeSet>("AttributeSet");
 }
 
 UAbilitySystemComponent* AMVV_PlayerState::GetAbilitySystemComponent() const
