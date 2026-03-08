@@ -9,8 +9,11 @@
 #include "MVV_BaseCharacter.generated.h"
 
 
+class UAttributeSet;
 class UGameplayEffect;
 class UGameplayAbility;
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FASCInitialized, UAbilitySystemComponent*, ASC, UAttributeSet*, AS);
 
 UCLASS(Abstract)
 class MUSEUMOFTHEVV_API AMVV_BaseCharacter : public ACharacter, public IAbilitySystemInterface
@@ -20,10 +23,14 @@ class MUSEUMOFTHEVV_API AMVV_BaseCharacter : public ACharacter, public IAbilityS
 public:
 	AMVV_BaseCharacter();
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	virtual UAttributeSet* GetAttributeSet() const { return nullptr; }
+
+	UPROPERTY(BlueprintAssignable)
+	FASCInitialized OnASCInitialized;
 
 protected:
 	void GiveStartupAbilities();
-	void InitializeAttributes();
+	void InitializeAttributes() const;
 	
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "MVV|Abilities")

@@ -21,6 +21,7 @@ public:
 	// This is the class that holds the gameplay ability system component and the player character will reference the player state to retrieve this variable
 	// This will likely be different for an Enemy Character as we will probably have the AbilitySystem Component on the character itself, I think.
 	virtual UAbilitySystemComponent* GetAbilitySystemComponent() const override;
+	UAttributeSet* GetAttributeSet() const { return AttributeSet; }
 
 private:
 

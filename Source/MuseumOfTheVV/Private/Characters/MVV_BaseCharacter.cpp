@@ -30,7 +30,7 @@ void AMVV_BaseCharacter::GiveStartupAbilities()
 	}
 }
 
-void AMVV_BaseCharacter::InitializeAttributes()
+void AMVV_BaseCharacter::InitializeAttributes() const
 {
 	checkf(IsValid(InitializeAttributesEffect), TEXT("InitializeAttributeEffect not set."));
 	

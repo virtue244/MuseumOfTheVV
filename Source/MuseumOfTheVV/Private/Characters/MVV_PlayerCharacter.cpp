@@ -63,6 +63,16 @@ UAbilitySystemComponent* AMVV_PlayerCharacter::GetAbilitySystemComponent() const
 	
 }
 
+UAttributeSet* AMVV_PlayerCharacter::GetAttributeSet() const
+{
+	AMVV_PlayerState* MVVPlayerState = Cast<AMVV_PlayerState>(GetPlayerState());
+	if (!IsValid(MVVPlayerState))
+	{
+		return nullptr;
+	}
+	return MVVPlayerState->GetAttributeSet();
+}
+
 // Override from ACharacter/APawn -> Called when this Pawn is possessed. Only called on the server (or in standalone).
 /*
 * This function only runs on the Server.
@@ -77,6 +87,7 @@ void AMVV_PlayerCharacter::PossessedBy(AController* NewController)
 	if (!IsValid(GetAbilitySystemComponent()) || !HasAuthority()) return;
 	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
+	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
 	GiveStartupAbilities();
 	InitializeAttributes();
 }
@@ -93,6 +104,7 @@ void AMVV_PlayerCharacter::OnRep_PlayerState()
 	if (!IsValid(GetAbilitySystemComponent())) return;
 	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
+	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
 }
 
 
