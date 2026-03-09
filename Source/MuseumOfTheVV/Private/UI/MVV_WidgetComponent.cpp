@@ -16,7 +16,9 @@ void UMVV_WidgetComponent::BeginPlay()
 	if (!IsASCInitialized())
 	{
 		Character->OnASCInitialized.AddDynamic(this, &ThisClass::OnASCInitialized);
+		return;
 	}
+	InitializeAttributeDelegate();
 }
 
 void UMVV_WidgetComponent::InitAbilitySystemData()
@@ -31,12 +33,30 @@ bool UMVV_WidgetComponent::IsASCInitialized() const
 	return AbilitySystemComponent.IsValid() && AttributeSet.IsValid();
 }
 
+void UMVV_WidgetComponent::InitializeAttributeDelegate()
+{
+	if (!AttributeSet->bAttributesInitialized)
+	{
+		AttributeSet->OnAttributesInitialized.AddDynamic(this, &ThisClass::BindToAttributeChanges);
+	}
+	else
+	{
+		BindToAttributeChanges();
+	}
+}
+
 void UMVV_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	AbilitySystemComponent = Cast<UMVV_AbilitySystemComponent>(ASC);
 	AttributeSet = Cast<UMVV_AttributeSet>(AS);
 
-	//TODO: Check if the Attribute Set has been initialized with the first GE
-	// If not, bind to some delegate that will be broadcast when it is initialized.
+	if (!IsASCInitialized()) return;
+	InitializeAttributeDelegate();
+}
+
+void UMVV_WidgetComponent::BindToAttributeChanges()
+{
+	//TODO: Listen for changes to gameplay attributes and update our widgets accordingly
+	
 }
 

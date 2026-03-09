@@ -7,12 +7,16 @@
 #include "AttributeSet.h"
 #include "MVV_AttributeSet.generated.h"
 
-// TODO Look up what a Macro is in this context and how it realates to your previous understanding of the word from video games.
+// Macros are a means of writing generic code to apply to new classes you write without
+// having to rewrite the code (getters and setters for example) or need to inherit from
+// a class that already uses those functions.
 #define ATTRIBUTE_ACCESSORS(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_PROPERTY_GETTER(ClassName, PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_GETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_SETTER(PropertyName) \
 	GAMEPLAYATTRIBUTE_VALUE_INITTER(PropertyName)
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FAttributesInitialized);
 
 UCLASS()
 class MUSEUMOFTHEVV_API UMVV_AttributeSet : public UAttributeSet
@@ -21,6 +25,16 @@ class MUSEUMOFTHEVV_API UMVV_AttributeSet : public UAttributeSet
 
 public:
 	virtual void GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& OutLifetimeProps) const override;
+	virtual void PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data) override;
+
+	UPROPERTY(BlueprintAssignable)
+	FAttributesInitialized OnAttributesInitialized;
+
+	UPROPERTY(ReplicatedUsing=OnRep_AttributesInitialized)
+	bool bAttributesInitialized = false;
+
+	UFUNCTION()
+	void OnRep_AttributesInitialized();
 	
 	UPROPERTY(BlueprintReadOnly, ReplicatedUsing=OnRep_Health)
 	FGameplayAttributeData Health;
