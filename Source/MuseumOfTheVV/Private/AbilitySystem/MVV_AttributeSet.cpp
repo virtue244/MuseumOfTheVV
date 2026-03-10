@@ -17,6 +17,7 @@ void UMVV_AttributeSet::GetLifetimeReplicatedProps(TArray<FLifetimeProperty>& Ou
 	DOREPLIFETIME(ThisClass, bAttributesInitialized)
 }
 
+
 void UMVV_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallbackData& Data)
 {
 	Super::PostGameplayEffectExecute(Data);
@@ -25,7 +26,7 @@ void UMVV_AttributeSet::PostGameplayEffectExecute(const FGameplayEffectModCallba
 	{
 		bAttributesInitialized = true;
 		
-		// TODO why are we broadcasting in two places, here and OnRep_AttributesInitialized
+		// Server Side Broadcast
 		OnAttributesInitialized.Broadcast();
 	}
 	
@@ -35,6 +36,7 @@ void UMVV_AttributeSet::OnRep_AttributesInitialized()
 {
 	if (bAttributesInitialized)
 	{
+		// Client Side Broadcast
 		OnAttributesInitialized.Broadcast();
 	}
 }

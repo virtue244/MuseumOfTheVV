@@ -12,8 +12,8 @@ TArray<AActor*> UMVV_Primary::HitBoxOverlapTest()
 	TArray<AActor*> ActorsToIgnore;
 	ActorsToIgnore.Add(GetAvatarActorFromActorInfo());
 
-	// Ensure that the overlap test ignores the Avator Actor
-	// TODO What is the Avatar Actor?
+	// Ensure that the overlap test ignores the Avatar Actor
+	// What is the Avatar Actor? The Avatar Actor was added above, and then applied to the QueryParam 
 	FCollisionQueryParams QueryParams;
 	QueryParams.AddIgnoredActors(ActorsToIgnore);
 
