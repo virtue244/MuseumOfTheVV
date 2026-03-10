@@ -5,7 +5,9 @@
 
 #include "AbilitySystem/MVV_AbilitySystemComponent.h"
 #include "AbilitySystem/MVV_AttributeSet.h"
+#include "Blueprint/WidgetTree.h"
 #include "Characters/MVV_BaseCharacter.h"
+#include "UI/MVV_AttributeWidget.h"
 
 
 void UMVV_WidgetComponent::BeginPlay()
@@ -45,6 +47,8 @@ void UMVV_WidgetComponent::InitializeAttributeDelegate()
 	}
 }
 
+
+
 void UMVV_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	AbilitySystemComponent = Cast<UMVV_AbilitySystemComponent>(ASC);
@@ -56,7 +60,31 @@ void UMVV_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttri
 
 void UMVV_WidgetComponent::BindToAttributeChanges()
 {
-	//TODO: Listen for changes to gameplay attributes and update our widgets accordingly
+	for (const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair : AttributeMap)
+	{
+		BindWidgetToAttributeChanges((GetUserWidgetObject()), Pair); //For checking the owned widget object
+
+		GetUserWidgetObject()->WidgetTree->ForEachWidget([this, &Pair](UWidget* ChildWidget)
+		{
+			BindWidgetToAttributeChanges(ChildWidget, Pair);
+		});
+	}
+	
+}
+
+void UMVV_WidgetComponent::BindWidgetToAttributeChanges(UWidget* WidgetObject,
+	const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair) const
+{
+	UMVV_AttributeWidget*  AttributeWidget = Cast<UMVV_AttributeWidget>(WidgetObject);
+	if (!IsValid(AttributeWidget)) return; // We only care about MVV_AttributeWidgets
+	if (!AttributeWidget->MatchesAttributes(Pair)) return; //Only Subscribe to matching Attributes
+
+	AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get()); // For Initial Values
+
+	AbilitySystemComponent->GetGameplayAttributeValueChangeDelegate(Pair.Key).AddLambda([this, AttributeWidget, &Pair](const FOnAttributeChangeData& AttributeChangeData)
+	{
+		AttributeWidget->OnAttributeChange(Pair, AttributeSet.Get()); // For change during the game.
+	});
 	
 }
 

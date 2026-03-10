@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "AttributeSet.h"
 #include "Components/WidgetComponent.h"
 #include "MVV_WidgetComponent.generated.h"
 
@@ -25,6 +26,9 @@ protected:
 	// Called when the game starts
 	virtual void BeginPlay() override;
 
+	UPROPERTY(EditAnywhere)
+	TMap<FGameplayAttribute, FGameplayAttribute> AttributeMap;
+	
 private:
 	/* ### 1. `TObjectPtr<T>` (Strong Reference)
 	 *	Introduced in Unreal Engine 5, `TObjectPtr` is the modern replacement for raw pointers (`T*`) when declaring object properties in header files.
@@ -54,6 +58,7 @@ private:
 	void InitAbilitySystemData();
 	bool IsASCInitialized() const;
 	void InitializeAttributeDelegate();
+	void BindWidgetToAttributeChanges(UWidget* WidgetObject, const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair) const;
 
 	UFUNCTION()
 	void OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS);
