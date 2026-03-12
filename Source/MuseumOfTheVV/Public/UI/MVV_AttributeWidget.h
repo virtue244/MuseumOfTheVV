@@ -28,5 +28,5 @@ public:
 	bool MatchesAttributes(const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair) const;
 
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "On Attribute Change"))
-	void BP_OnAttributeChange(float NewValue, float OldValue);
+	void BP_OnAttributeChange(float NewValue, float NewMaxValue);
 };
