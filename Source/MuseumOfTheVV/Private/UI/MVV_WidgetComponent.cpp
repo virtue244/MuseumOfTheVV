@@ -47,8 +47,6 @@ void UMVV_WidgetComponent::InitializeAttributeDelegate()
 	}
 }
 
-
-
 void UMVV_WidgetComponent::OnASCInitialized(UAbilitySystemComponent* ASC, UAttributeSet* AS)
 {
 	AbilitySystemComponent = Cast<UMVV_AbilitySystemComponent>(ASC);

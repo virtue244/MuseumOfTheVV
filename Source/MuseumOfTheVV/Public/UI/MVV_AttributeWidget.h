@@ -27,6 +27,7 @@ public:
 	void OnAttributeChange(const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair, UMVV_AttributeSet* AttributeSet);
 	bool MatchesAttributes(const TTuple<FGameplayAttribute, FGameplayAttribute>& Pair) const;
 
+	// TODO - This function shows up as an event why is that?
 	UFUNCTION(BlueprintImplementableEvent, meta = (DisplayName = "On Attribute Change"))
 	void BP_OnAttributeChange(float NewValue, float NewMaxValue);
 };
