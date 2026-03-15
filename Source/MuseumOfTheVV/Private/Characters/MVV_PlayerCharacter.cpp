@@ -4,6 +4,7 @@
 #include "MuseumOfTheVV/Public/Characters/MVV_PlayerCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/MVV_AttributeSet.h"
 #include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -88,8 +89,14 @@ void AMVV_PlayerCharacter::PossessedBy(AController* NewController)
 	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
 	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
+	
 	GiveStartupAbilities();
 	InitializeAttributes();
+
+	UMVV_AttributeSet* AttributeSet = Cast<UMVV_AttributeSet>(GetAttributeSet());
+	if (!IsValid(AttributeSet))return;
+	GetAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::OnHealthChanged);
+	
 }
 
 // Override from APawn -> PlayerState Replication Notification Callback meaning that it triggers automatically on clients whenever the server updates or assigns a PlayerState to that specific Pawn.
@@ -105,6 +112,11 @@ void AMVV_PlayerCharacter::OnRep_PlayerState()
 	
 	GetAbilitySystemComponent()->InitAbilityActorInfo(GetPlayerState(), this);
 	OnASCInitialized.Broadcast(GetAbilitySystemComponent(), GetAttributeSet());
+
+	UMVV_AttributeSet* AttributeSet = Cast<UMVV_AttributeSet>(GetAttributeSet());
+	if (!IsValid(AttributeSet))return;
+	GetAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(AttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::OnHealthChanged);
+	
 }
 
 

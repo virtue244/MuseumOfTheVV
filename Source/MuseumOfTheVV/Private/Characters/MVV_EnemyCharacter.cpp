@@ -51,6 +51,10 @@ void AMVV_EnemyCharacter::BeginPlay()
 
 	GiveStartupAbilities();
 	InitializeAttributes();
+
+	UMVV_AttributeSet* MVV_AttributeSet = Cast<UMVV_AttributeSet>(GetAttributeSet());
+	if (!IsValid(MVV_AttributeSet))return;
+	GetAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(MVV_AttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::OnHealthChanged);
 	
 }
 
