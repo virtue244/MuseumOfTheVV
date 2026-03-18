@@ -35,6 +35,7 @@ bool UMVV_WidgetComponent::IsASCInitialized() const
 	return AbilitySystemComponent.IsValid() && AttributeSet.IsValid();
 }
 
+// TODO - Need to identify how Add Dynamic connects to the Dynamic Delegate
 void UMVV_WidgetComponent::InitializeAttributeDelegate()
 {
 	if (!AttributeSet->bAttributesInitialized)

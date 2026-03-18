@@ -14,6 +14,7 @@ class UAttributeSet;
 class UGameplayEffect;
 class UGameplayAbility;
 
+// TODO - Need to better understand Dynamic Multicast Delegate
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_TwoParams(FASCInitialized, UAbilitySystemComponent*, ASC, UAttributeSet*, AS);
 
 UCLASS(Abstract)
