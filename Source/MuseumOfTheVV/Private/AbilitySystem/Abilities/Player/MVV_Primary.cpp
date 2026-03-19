@@ -49,6 +49,8 @@ void UMVV_Primary::SendHitReactEventToActors(const TArray<AActor*>& Actors)
 	{
 		FGameplayEventData Payload;
 		Payload.Instigator = GetAvatarActorFromActorInfo();
+		// We are calling this in the AnimNotify that is set to be triggered each time we attack, for all hit actors, so if nothing is hit, this is not called
+		// Once the event is received that hit actor will choose what to do with this information.
 		UAbilitySystemBlueprintLibrary::SendGameplayEventToActor(HitActor, MVVTags::Events::Enemy::HitReact, Payload);
 	}
 }
