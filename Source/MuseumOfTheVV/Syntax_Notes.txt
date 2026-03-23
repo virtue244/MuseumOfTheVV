@@ -1,0 +1,21 @@
+Learning C++ Syntax where I am lacking.
+-----------------
+"extern" for scoping a global variable properly.
+
+// Global variable definition
+int a = 10;  // This defines and initializes 'a'
+
+int main() {
+    extern int a;  // This declares 'a' (tells compiler it exists elsewhere)
+   
+   // Now you can use 'a' in this scope
+    printf("%d", a);  // This would print 10
+    
+    return 0;
+}
+
+
+------------------
+
+
+
