@@ -14,8 +14,30 @@ int main() {
     return 0;
 }
 
+------------------
+"::"
+
+| Usage                 | Example                   | Meaning                           |
+| --------------------- | ------------------------- | --------------------------------- |
+| Global scope          | `::variable`              | Access global variable            |
+| Namespace             | `std::cout`               | Access cout from std namespace    |
+| Static member         | `MyClass::staticVar`      | Access static member of class     |
+| Method definition     | `MyClass::Method()`       | Define class method outside class |
+| Nested scope          | `Outer::Inner::member`    | Access nested class member        |
+| Enum class            | `Color::RED`              | Access enum value                 |
+  
+*Important note here is that the "::" can be used to reference a global variable in the same file, but "extern" can be used to reference a global variable in another file.
 
 ------------------
+"->" Pointer Operator
+This symbol is used to dereference a pointer and immediately access one of that object's member variables/functions.
+
+Person* A;
+
+A.Name      // Would not work because we are trying to access a member of an address location, not the object.
+(*A).Name   // Would work because we are dereferencing the variable A and then attempting to access that object's member.
+A->Name     // This is simply a shorthand for dereferencing and then accessing a member like we did on the line above.
+
 
 
 

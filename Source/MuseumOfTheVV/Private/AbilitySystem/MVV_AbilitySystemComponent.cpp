@@ -39,6 +39,11 @@ void UMVV_AbilitySystemComponent::AddToAbilityLevel(TSubclassOf<UGameplayAbility
 	if (IsValid(GetAvatarActor()) && !GetAvatarActor()->HasAuthority()) return;
 	if (FGameplayAbilitySpec* AbilitySpec = FindAbilitySpecFromClass(AbilityClass))
 	{
+		/* Ability Spec is a pointer to an object denoted by the datatype followed by the asterisk and then the variable name
+			 Since this variable is a pointer (storing memory address of the object) to access the objects memeber variables/functions, we need to dereference it first.
+			Thus we could also write this same code as,
+			*///(*AbilitySpec).Level += Level;
+		
 		AbilitySpec->Level += Level;
 		MarkAbilitySpecDirty(*AbilitySpec);
 	}
