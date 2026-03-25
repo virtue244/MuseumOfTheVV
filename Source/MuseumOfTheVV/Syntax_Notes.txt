@@ -38,6 +38,9 @@ A.Name      // Would not work because we are trying to access a member of an add
 (*A).Name   // Would work because we are dereferencing the variable A and then attempting to access that object's member.
 A->Name     // This is simply a shorthand for dereferencing and then accessing a member like we did on the line above.
 
+------------------
+
+
 
 
 
