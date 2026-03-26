@@ -26,7 +26,10 @@ TArray<AActor*> UMVV_Primary::HitBoxOverlapTest()
 
 	const FVector Forward = GetAvatarActorFromActorInfo()->GetActorForwardVector() * HitBoxForwardOffset;
 	const FVector HitBoxLocation = GetAvatarActorFromActorInfo()->GetActorLocation() + Forward +FVector(0.f, 0.f, HitBoxElevationOffset);
-	
+
+	// Get World returns a UWorld object pointer (UWorld*) that then uses the pointer operand that both dereferences the pointer and then basically uses a dot operator all in one symbol.
+	// We could also do this, (*GetWorld()).OverlapMultiByChannel(....
+	// As well the OverlapResults object
 	GetWorld()->OverlapMultiByChannel(OverlapResults, HitBoxLocation, FQuat::Identity, ECC_Visibility, Sphere, QueryParams, ResponseParams);
 
 	TArray<AActor*> ActorsHit;
