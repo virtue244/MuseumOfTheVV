@@ -41,9 +41,34 @@ A->Name     // This is simply a shorthand for dereferencing and then accessing a
 Please see MVV_HitReact.cpp for additional comments on real examples of the dot and pointer operators.
 
 ------------------
+So const means that the variable is going to remain constant or unchanged.
+I found an example of a const method now. 
+Which means that this method will not modify any member varibales of the object
+
+From AI (Claude 4 Sonnet):
+"1. **`const`** - **Const Qualifier**
+    - This is a **const member function**
+    - Promises that calling this method will **NOT modify** any member variables of the object
+    - Allows the method to be called on `const` objects
+    - Good practice for "getter" methods that only read data"
+    
+    
 
 
+------------------
+Delegate
 
+
+[Health Changes from 100 → 80]
+            ↓
+   [AbilitySystemComponent]
+            ↓
+   [Delegate.Broadcast()]
+            ↓
+    ┌───────┼───────┐
+    ↓       ↓       ↓
+[UI Update] [Audio] [VFX]
+"80/100 HP" "Hurt!" "Red Flash"
 
 
 
