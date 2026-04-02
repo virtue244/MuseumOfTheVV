@@ -54,9 +54,8 @@ void AMVV_EnemyCharacter::BeginPlay()
 
 	UMVV_AttributeSet* MVV_AttributeSet = Cast<UMVV_AttributeSet>(GetAttributeSet());
 	if (!IsValid(MVV_AttributeSet))return;
+
+	// Bind to health attribute changes to trigger OnHealthChanged when this enemy's health is modified
 	GetAbilitySystemComponent()->GetGameplayAttributeValueChangeDelegate(MVV_AttributeSet->GetHealthAttribute()).AddUObject(this, &ThisClass::OnHealthChanged);
 	
 }
-
-
-

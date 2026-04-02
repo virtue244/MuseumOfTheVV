@@ -41,6 +41,8 @@ A->Name     // This is simply a shorthand for dereferencing and then accessing a
 Please see MVV_HitReact.cpp for additional comments on real examples of the dot and pointer operators.
 
 ------------------
+Const
+
 So const means that the variable is going to remain constant or unchanged.
 I found an example of a const method now. 
 Which means that this method will not modify any member varibales of the object
@@ -69,6 +71,9 @@ Delegate
     ↓       ↓       ↓
 [UI Update] [Audio] [VFX]
 "80/100 HP" "Hurt!" "Red Flash"
+
+------------------
+Lambda
 
 
 
